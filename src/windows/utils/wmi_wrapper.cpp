@@ -103,7 +103,7 @@ std::vector<bool> query(const std::wstring& wmi_class, const std::wstring& field
     VARIANT vt_prop;
     HRESULT hr = obj->Get(field.c_str(), 0, &vt_prop, nullptr, nullptr);
     if (SUCCEEDED(hr)) {
-      result.push_back(vt_prop.boolVal);
+      result.push_back(!!vt_prop.boolVal); // `!!` operator: fixes warning C4800: Implicit conversion from 'VARIANT_BOOL' to bool.
     }
     VariantClear(&vt_prop);
     obj->Release();
